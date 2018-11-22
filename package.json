@@ -1,0 +1,50 @@
+{
+  "name": "wp-api-client",
+  "version": "0.0.0",
+  "description": "WordPress API client for node",
+  "main": "client.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "tape test.js | tap-spec",
+    "test:debug": "node --inspect-brk test.js | tap-spec",
+    "docs": "documentation readme client.js --section=API"
+  },
+  "keywords": [
+    "wordpress",
+    "WordPress",
+    "wp-json",
+    "api",
+    "client"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vladimyr/wp-api-client.git"
+  },
+  "author": {
+    "email": "d.vladimyr@gmail.com",
+    "name": "Dario Vladovic",
+    "url": "https://github.com/vladimyr"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vladimyr/wp-api-client/issues"
+  },
+  "homepage": "https://github.com/vladimyr/wp-api-client",
+  "dependencies": {
+    "got": "^9.3.2",
+    "html2plaintext": "^2.1.0",
+    "url-join": "^4.0.0"
+  },
+  "devDependencies": {
+    "documentation": "^8.1.2",
+    "eslint": "^5.9.0",
+    "eslint-config-semistandard": "^13.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.9.1"
+  }
+}
