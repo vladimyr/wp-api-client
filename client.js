@@ -1,13 +1,9 @@
 'use strict';
 
 const debug = require('debug')('http');
-const html2text = require('html2plaintext');
 const r = require('got');
 const qs = require('querystring');
 const urlJoin = require('url-join');
-
-const lazy = getter => ({ enumerable: true, get: getter });
-const normalize = url => url.replace(/\/$/, '');
 
 /**
  * Create new WordPress REST API client.<br>
@@ -33,12 +29,7 @@ class WordPressClient {
     const { headers, body = [] } = await r.get(url, { json: true });
     const total = parseInt(headers['x-wp-total'], 10);
     const totalPages = parseInt(headers['x-wp-totalpages'], 10);
-    const items = body.map(it => Object.defineProperties({
-      id: it.id,
-      createdAt: it.date,
-      modifiedAt: it.modified,
-      link: normalize(it.link)
-    }, parseItem(it)));
+    const items = body.map(it => processItem(it));
     return { total, totalPages, pageSize, items };
   }
 
@@ -53,13 +44,8 @@ class WordPressClient {
   async _fetchItem(id, collection) {
     const url = urlJoin(this._baseUrl, collection, id.toString());
     debug('url:', url);
-    const { body: item = {} } = await r.get(url, { json: true });
-    return Object.defineProperties({
-      id: item.id,
-      createdAt: item.date,
-      modifiedAt: item.modified,
-      link: normalize(item.link)
-    }, parseItem(item));
+    const { body: item } = await r.get(url, { json: true });
+    return processItem(item);
   }
 
   /**
@@ -121,11 +107,15 @@ class WordPressClient {
 
 module.exports = WordPressClient;
 
-function parseItem({ title, content, excerpt } = {}) {
+function processItem(item) {
   return {
-    title: lazy(() => html2text(title.rendered)),
-    content: lazy(() => html2text(content.rendered)),
-    excerpt: lazy(() => html2text(excerpt.rendered))
+    id: item.id,
+    createdAt: item.date,
+    modifiedAt: item.modified,
+    link: item.link,
+    title: item.title.rendered,
+    excerpt: item.excerpt.rendered,
+    content: item.content.rendered
   };
 }
 
@@ -135,9 +125,9 @@ function parseItem({ title, content, excerpt } = {}) {
  * @property {String} createdAt Item creation date.
  * @property {String} modifiedAt Last modification date.
  * @property {String} link Url of an item.
- * @property {String} title Item's title in plaintext format.
- * @property {String} excerpt Item's excerpt in plaintext format.
- * @property {String} content Item's content in plaintext format.
+ * @property {String} title Item's title in html format.
+ * @property {String} excerpt Item's excerpt in html format.
+ * @property {String} content Item's content in html format.
  */
 
 /**

@@ -128,9 +128,9 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 -   `createdAt` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item creation date.
 -   `modifiedAt` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Last modification date.
 -   `link` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Url of an item.
--   `title` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item's title in plaintext format.
--   `excerpt` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item's excerpt in plaintext format.
--   `content` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item's content in plaintext format.
+-   `title` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item's title in html format.
+-   `excerpt` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item's excerpt in html format.
+-   `content` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item's content in html format.
 
 ### Response
 
