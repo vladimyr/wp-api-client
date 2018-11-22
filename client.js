@@ -1,7 +1,9 @@
 'use strict';
 
+const debug = require('debug')('http');
 const html2text = require('html2plaintext');
 const r = require('got');
+const qs = require('querystring');
 const urlJoin = require('url-join');
 
 const lazy = getter => ({ enumerable: true, get: getter });
@@ -21,13 +23,14 @@ class WordPressClient {
   }
 
   async _fetchCollection(name, { pageSize = 10, offset = 0, ...options } = {}) {
-    const query = {
+    const query = qs.stringify({
       ...options,
       per_page: pageSize,
       offset
-    };
-    const url = urlJoin(this._baseUrl, name);
-    const { headers, body = [] } = await r.get(url, { json: true, query });
+    });
+    const url = urlJoin(this._baseUrl, name, `/?${query}`);
+    debug('url:', url);
+    const { headers, body = [] } = await r.get(url, { json: true });
     const total = parseInt(headers['x-wp-total'], 10);
     const totalPages = parseInt(headers['x-wp-totalpages'], 10);
     const items = body.map(it => Object.defineProperties({
@@ -41,6 +44,7 @@ class WordPressClient {
 
   async _fetchItem(id, collection) {
     const url = urlJoin(this._baseUrl, collection, id);
+    debug('url:', url);
     const { body: item = {} } = await r.get(url, { json: true });
     return Object.defineProperties({
       id: item.id,
