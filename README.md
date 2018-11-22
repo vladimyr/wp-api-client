@@ -9,7 +9,7 @@
 ## Usage
 
 ```js
-const WordPressClient = require('./client');
+const WordPressClient = require('wp-api-client');
 
 // Create API client for WordPress blog
 const client = new WordPressClient('https://wordpress.org/news');
@@ -34,10 +34,14 @@ client.fetchPosts()
         -   [Parameters](#parameters-1)
     -   [fetchPost](#fetchpost)
         -   [Parameters](#parameters-2)
-    -   [fetchPages](#fetchpages)
+    -   [countPosts](#countposts)
         -   [Parameters](#parameters-3)
-    -   [fetchPage](#fetchpage)
+    -   [fetchPages](#fetchpages)
         -   [Parameters](#parameters-4)
+    -   [fetchPage](#fetchpage)
+        -   [Parameters](#parameters-5)
+    -   [countPages](#countpages)
+        -   [Parameters](#parameters-6)
 -   [Item](#item)
     -   [Properties](#properties)
 -   [Response](#response)
@@ -73,6 +77,16 @@ Retrieve single post from target site.
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Item](#item)>** _Post properties in form of an `Item`._
 
+#### countPosts
+
+Count all available posts.
+
+##### Parameters
+
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/posts/#arguments).
+
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** _Total number of available posts._
+
 #### fetchPages
 
 List pages from target site.
@@ -93,6 +107,16 @@ Retrieve single page from target site.
 -   `id` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Unique identifier for the object
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Item](#item)>** _Page properties in form of an `Item`._
+
+#### countPages
+
+Count all available pages.
+
+##### Parameters
+
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/pages/#arguments).
+
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** _Total number of available pages._
 
 ### Item
 

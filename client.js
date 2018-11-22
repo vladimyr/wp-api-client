@@ -42,6 +42,14 @@ class WordPressClient {
     return { total, totalPages, pageSize, items };
   }
 
+  async _countItems(name, options = {}) {
+    const query = qs.stringify(options);
+    const url = urlJoin(this._baseUrl, name, `/?${query}`);
+    debug('url:', url);
+    const { headers } = await r.head(url);
+    return parseInt(headers['x-wp-total'], 10);
+  }
+
   async _fetchItem(id, collection) {
     const url = urlJoin(this._baseUrl, collection, id.toString());
     debug('url:', url);
@@ -74,6 +82,15 @@ class WordPressClient {
   }
 
   /**
+   * Count all available posts.
+   * @param {Object?} options Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/posts/#arguments).
+   * @returns {Number} _Total number of available posts._
+   */
+  countPosts(options) {
+    return this._countItems('posts', options);
+  }
+
+  /**
    * List pages from target site.
    * @param {Object?} options Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/pages/#arguments).
    * @param {Number} [options.pageSize=10] Maximum number of items to be returned in result set.
@@ -90,6 +107,15 @@ class WordPressClient {
    */
   fetchPage(id) {
     return this._fetchItem(id, 'pages');
+  }
+
+  /**
+   * Count all available pages.
+   * @param {Object?} options Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/pages/#arguments).
+   * @returns {Number} _Total number of available pages._
+   */
+  countPages(options) {
+    return this._countPages('posts', options);
   }
 }
 
