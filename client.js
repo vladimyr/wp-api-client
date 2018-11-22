@@ -43,7 +43,7 @@ class WordPressClient {
   }
 
   async _fetchItem(id, collection) {
-    const url = urlJoin(this._baseUrl, collection, id);
+    const url = urlJoin(this._baseUrl, collection, id.toString());
     debug('url:', url);
     const { body: item = {} } = await r.get(url, { json: true });
     return Object.defineProperties({
