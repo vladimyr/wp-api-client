@@ -31,8 +31,8 @@
   },
   "homepage": "https://github.com/vladimyr/wp-api-client",
   "dependencies": {
+    "debug": "^4.1.0",
     "got": "^9.3.2",
-    "html2plaintext": "^2.1.0",
     "url-join": "^4.0.0"
   },
   "devDependencies": {
