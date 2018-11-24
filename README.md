@@ -42,9 +42,11 @@ client.fetchPosts()
         -   [Parameters](#parameters-5)
     -   [countPages](#countpages)
         -   [Parameters](#parameters-6)
--   [Item](#item)
-    -   [Properties](#properties)
+-   [Page](#page)
+-   [Post](#post)
 -   [Response](#response)
+    -   [Properties](#properties)
+-   [Item](#item)
     -   [Properties](#properties-1)
 
 ### WordPressClient
@@ -65,7 +67,7 @@ List posts from target site.
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/posts/#arguments).
     -   `options.pageSize` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Maximum number of items to be returned in result set. (optional, default `10`)
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Response](#response)>** _Paginated listing of posts._
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Response](#response)&lt;[Post](#post)>>** Paginated listing of posts.
 
 #### fetchPost
 
@@ -75,7 +77,7 @@ Retrieve single post from target site.
 
 -   `id` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Unique identifier for the object.
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Item](#item)>** _Post properties in form of an `Item`._
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Post](#post)>** `Post` with requested `id`.
 
 #### countPosts
 
@@ -85,7 +87,7 @@ Count all available posts.
 
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/posts/#arguments).
 
-Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** _Total number of available posts._
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Total number of available posts.
 
 #### fetchPages
 
@@ -96,7 +98,7 @@ List pages from target site.
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/pages/#arguments).
     -   `options.pageSize` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Maximum number of items to be returned in result set. (optional, default `10`)
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Response](#response)>** _Paginated listing of pages._
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Response](#response)&lt;[Page](#page)>>** Paginated listing of pages.
 
 #### fetchPage
 
@@ -106,7 +108,7 @@ Retrieve single page from target site.
 
 -   `id` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Unique identifier for the object
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Item](#item)>** _Page properties in form of an `Item`._
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Page](#page)>** `Page` with requested `id`.
 
 #### countPages
 
@@ -116,7 +118,26 @@ Count all available pages.
 
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/pages/#arguments).
 
-Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** _Total number of available pages._
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Total number of available pages.
+
+### Page
+
+Type: [Item](#item)
+
+### Post
+
+Type: [Item](#item)
+
+### Response
+
+Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
+
+#### Properties
+
+-   `total` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Total number of available items.
+-   `totalPages` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Total number of pages.
+-   `pageSize` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Maximum number of items returned in result set.
+-   `items` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;T>** Items returned in current result set.
 
 ### Item
 
@@ -131,14 +152,3 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 -   `title` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item's title in html format.
 -   `excerpt` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item's excerpt in html format.
 -   `content` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Item's content in html format.
-
-### Response
-
-Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
-
-#### Properties
-
--   `total` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Total number of available items.
--   `totalPages` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Total number of pages.
--   `pageSize` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Maximum number of items returned in result set.
--   `items` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Item](#item)>** Items returned in current result set.

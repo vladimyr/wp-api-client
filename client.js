@@ -12,6 +12,7 @@ const urlJoin = require('url-join');
  */
 class WordPressClient {
   /**
+   * @constructor
    * @param {String} url Url of WordPress installation.
    */
   constructor(url) {
@@ -52,7 +53,7 @@ class WordPressClient {
    * List posts from target site.
    * @param {Object?} options Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/posts/#arguments).
    * @param {Number} [options.pageSize=10] Maximum number of items to be returned in result set.
-   * @returns {Promise<Response>} _Paginated listing of posts._
+   * @returns {Promise<Response<Post>>} Paginated listing of posts.
    */
   fetchPosts(options) {
     return this._fetchCollection('posts', options);
@@ -61,7 +62,7 @@ class WordPressClient {
   /**
    * Retrieve single post from target site.
    * @param {Number} id Unique identifier for the object.
-   * @returns {Promise<Item>} _Post properties in form of an `Item`._
+   * @returns {Promise<Post>} `Post` with requested `id`.
    */
   fetchPost(id) {
     return this._fetchItem(id, 'posts');
@@ -70,7 +71,7 @@ class WordPressClient {
   /**
    * Count all available posts.
    * @param {Object?} options Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/posts/#arguments).
-   * @returns {Number} _Total number of available posts._
+   * @returns {Number} Total number of available posts.
    */
   countPosts(options) {
     return this._countItems('posts', options);
@@ -80,7 +81,7 @@ class WordPressClient {
    * List pages from target site.
    * @param {Object?} options Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/pages/#arguments).
    * @param {Number} [options.pageSize=10] Maximum number of items to be returned in result set.
-   * @returns {Promise<Response>} _Paginated listing of pages._
+   * @returns {Promise<Response<Page>>} Paginated listing of pages.
    */
   fetchPages(options) {
     return this._fetchCollection('pages', options);
@@ -89,7 +90,7 @@ class WordPressClient {
   /**
    * Retrieve single page from target site.
    * @param {Number} id Unique identifier for the object
-   * @returns {Promise<Item>} _Page properties in form of an `Item`._
+   * @returns {Promise<Page>} `Page` with requested `id`.
    */
   fetchPage(id) {
     return this._fetchItem(id, 'pages');
@@ -98,7 +99,7 @@ class WordPressClient {
   /**
    * Count all available pages.
    * @param {Object?} options Endpoint [arguments](https://developer.wordpress.org/rest-api/reference/pages/#arguments).
-   * @returns {Number} _Total number of available pages._
+   * @returns {Number} Total number of available pages.
    */
   countPages(options) {
     return this._countPages('posts', options);
@@ -119,7 +120,20 @@ function processItem(item) {
   };
 }
 
+/** @typedef {Item} Page */
+/** @typedef {Item} Post */
+
 /**
+ * @typedef {Object} Response
+ * @property {Number} total Total number of available items.
+ * @property {Number} totalPages Total number of pages.
+ * @property {Number} pageSize Maximum number of items returned in result set.
+ * @property {Array<T>} items Items returned in current result set.
+ * @template T
+ */
+
+/**
+ * @package
  * @typedef {Object} Item
  * @property {Number} id Unique identifier for the object.
  * @property {String} createdAt Item creation date.
@@ -128,12 +142,4 @@ function processItem(item) {
  * @property {String} title Item's title in html format.
  * @property {String} excerpt Item's excerpt in html format.
  * @property {String} content Item's content in html format.
- */
-
-/**
- * @typedef {Object} Response
- * @property {Number} total Total number of available items.
- * @property {Number} totalPages Total number of pages.
- * @property {Number} pageSize Maximum number of items returned in result set.
- * @property {Array<Item>} items Items returned in current result set.
  */
